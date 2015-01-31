@@ -440,22 +440,27 @@ public class HomeController {
 			throws SQLException {
 		logger.info("Welcome home! The client locale is {}.", locale);
 
+		
 		return "signup/login";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String register(Locale locale, Model model) throws SQLException {
+	public String register(Locale locale, Model model, HttpSession session, HttpServletResponse response) throws SQLException, IOException {
 		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		if (session.getAttribute("id") != null
+				&& session.getAttribute("nickname") != null
+				&& session.getAttribute("level") != null) {
 
+			String url = "/index";
+			response.sendRedirect(url);
+			return "home";
+		}
 		return "signup/register";
 	}
-
-	@RequestMapping(value = "/board", method = RequestMethod.GET)
-	public String board(@RequestParam String b, @RequestParam String p,
+	void select_board(@RequestParam String b, @RequestParam String p,
 			Locale locale, Model model, HttpServletRequest request,
-			HttpSession session) throws SQLException,
-			UnsupportedEncodingException {
-		logger.info("board! The client locale is {}.", locale);
+			HttpSession session) throws SQLException, UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 
 		Btype bt_return = new Btype();
@@ -508,11 +513,11 @@ public class HomeController {
 		model.addAttribute("pt", pt);
 
 		for (int i = 0; i < article.size(); i++) {
-			int size = article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length() - 1 < 80 ? 
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length()
+			int size = article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").length() - 1 < 80 ? 
+					article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").length()
 					: 80;
 			article.elementAt(i).setAt_content(
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").substring(0, size));
+					article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").substring(0, size));
 		}
 		/*
 		 * board -> board 게시판 종류에 따라, page -> 페이지 번호에 따라 게시물을 불러옴. article 벡터에
@@ -527,6 +532,15 @@ public class HomeController {
 		String today = sdformat.format(date);
 
 		model.addAttribute("today", today);
+	}
+	@RequestMapping(value = "/board", method = RequestMethod.GET)
+	public String board(@RequestParam String b, @RequestParam String p,
+			Locale locale, Model model, HttpServletRequest request,
+			HttpSession session) throws SQLException,
+			UnsupportedEncodingException {
+		logger.info("board! The client locale is {}.", locale);
+		select_board(b, p, locale, model, request, session);
+		
 		/*
 		 * article = 게시물을 담고 있는 벡터. board_type = 게시판 이름 예) Swift, C++, 자유게시판
 		 * board = 게시물 종류
@@ -540,77 +554,8 @@ public class HomeController {
 			HttpSession session) throws SQLException,
 			UnsupportedEncodingException {
 		logger.info("board! The client locale is {}.", locale);
-		request.setCharacterEncoding("utf-8");
 
-		Btype bt_return = new Btype();
-		String board_type = bt_return.bt_return(b);
-
-		int page = 1;
-		if (p != null) {
-			page = Integer.parseInt(p);
-			if (page < 1)
-				page = 1;
-		}
-
-		ApplicationContext context = new AnnotationConfigApplicationContext(
-				DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		int num = 0;
-		Vector<BoardVO> article;
-
-		if (session.getAttribute("id") != null
-				&& session.getAttribute("nickname") != null
-				&& session.getAttribute("level") != null
-				&& (Integer) session.getAttribute("level") >= 9) {
-			num = b_dao.get_column_number(b);
-			article = b_dao.select_board(b, page);
-		} else {
-			num = b_dao.get_column_number_not_delete(b);
-			article = b_dao.select_board_not_delete(b, page);
-		}
-		// 현재 게시판 종류의 총 게시물의 갯수를 가져옴.
-		int page_num = num % 15;
-		// 현재 게시물의 갯수를 15로 나눈 나머지가 0이 아닐경우, 페이지가 한개 더 추가됨.
-		if (page_num == 0)
-			page_num = num / 15;
-		else
-			page_num = (num / 15) + 1;
-		// 총 페이지의 갯수를 지정함.
-		int curr_page_num = Integer.parseInt(p);
-		// 현재 페이지 넘버를 가지는 정수형 변수.
-		int curr_page = (int) ((curr_page_num - 1) / 10);
-		int pt = (int) page_num / 10;
-		int n = 0;
-
-		model.addAttribute("board", b);
-		model.addAttribute("num", num);
-		model.addAttribute("page_num", page_num);
-		model.addAttribute("curr_page", curr_page);
-		model.addAttribute("n", n);
-		model.addAttribute("curr_page_num", curr_page_num);
-		model.addAttribute("pt", pt);
-
-		for (int i = 0; i < article.size(); i++) {
-			int size = article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length() - 1 < 80 ? 
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length()
-					: 80;
-			article.elementAt(i).setAt_content(
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").substring(0, size));
-		}
-
-		model.addAttribute("article", article);
-		model.addAttribute("page", page);
-
-		Date date = new Date();
-		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-		String today = sdformat.format(date);
-
-		model.addAttribute("today", today);
-		/*
-		 * article = 게시물을 담고 있는 벡터. board_type = 게시판 이름 예) Swift, C++, 자유게시판
-		 * board = 게시물 종류
-		 */
+		select_board(b, p, locale, model, request, session);
 		return "bbs/study";
 	}
 
@@ -620,73 +565,8 @@ public class HomeController {
 			HttpSession session) throws SQLException,
 			UnsupportedEncodingException {
 		logger.info("board! The client locale is {}.", locale);
-		request.setCharacterEncoding("utf-8");
 
-		Btype bt_return = new Btype();
-		String board_type = bt_return.bt_return(b);
-
-		int page = 1;
-		if (p != null) {
-			page = Integer.parseInt(p);
-			if (page < 1)
-				page = 1;
-		}
-
-		ApplicationContext context = new AnnotationConfigApplicationContext(
-				DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		int num = 0;
-		Vector<BoardVO> article;
-
-		if (session.getAttribute("id") != null
-				&& session.getAttribute("nickname") != null
-				&& session.getAttribute("level") != null
-				&& (Integer) session.getAttribute("level") >= 9) {
-			num = b_dao.get_column_number(b);
-			article = b_dao.select_board(b, page);
-		} else {
-			num = b_dao.get_column_number_not_delete(b);
-			article = b_dao.select_board_not_delete(b, page);
-		}
-		// 현재 게시판 종류의 총 게시물의 갯수를 가져옴.
-		int page_num = num % 15;
-		// 현재 게시물의 갯수를 15로 나눈 나머지가 0이 아닐경우, 페이지가 한개 더 추가됨.
-		if (page_num == 0)
-			page_num = num / 15;
-		else
-			page_num = (num / 15) + 1;
-		// 총 페이지의 갯수를 지정함.
-		int curr_page_num = Integer.parseInt(p);
-		// 현재 페이지 넘버를 가지는 정수형 변수.
-		int curr_page = (int) ((curr_page_num - 1) / 10);
-		int pt = (int) page_num / 10;
-		int n = 0;
-
-		model.addAttribute("board", b);
-		model.addAttribute("num", num);
-		model.addAttribute("page_num", page_num);
-		model.addAttribute("curr_page", curr_page);
-		model.addAttribute("n", n);
-		model.addAttribute("curr_page_num", curr_page_num);
-		model.addAttribute("pt", pt);
-
-		for (int i = 0; i < article.size(); i++) {
-			int size = article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length() - 1 < 80 ? 
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").length()
-					: 80;
-			article.elementAt(i).setAt_content(
-					article.elementAt(i).getAt_content().replace("<p>", "").replace("</p>", "").substring(0, size));
-		}
-
-		model.addAttribute("article", article);
-		model.addAttribute("page", page);
-
-		Date date = new Date();
-		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
-		String today = sdformat.format(date);
-
-		model.addAttribute("today", today);
+		select_board(b, p, locale, model, request, session);
 		return "bbs/project";
 
 	}
@@ -783,25 +663,37 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/bWrite", method = RequestMethod.GET)
-	public String bWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model)  {
+	public String bWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model , HttpSession session)  {
 		model.addAttribute("b", b);
 		model.addAttribute("p", p);
+		
+		if(session.getAttribute("nickname")==null || 
+				session.getAttribute("id")== null || 
+					session.getAttribute("level")==null) return "signup/login";
 		return "bbs/board-write";
 
 	}
 	
 	@RequestMapping(value = "/sWrite", method = RequestMethod.GET)
-	public String sWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model)  {
+	public String sWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model , HttpSession session)  {
 		model.addAttribute("b", b);
 		model.addAttribute("p", p);
+		
+		if(session.getAttribute("nickname")==null || 
+				session.getAttribute("id")== null || 
+					session.getAttribute("level")==null) return "signup/login";
 		return "bbs/study-write";
 
 	}
 	
 	@RequestMapping(value = "/pWrite", method = RequestMethod.GET)
-	public String pWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model)  {
+	public String pWrite(@RequestParam String b, @RequestParam String p,Locale locale, Model model , HttpSession session)  {
 		model.addAttribute("b", b);
 		model.addAttribute("p", p);
+		
+		if(session.getAttribute("nickname")==null || 
+				session.getAttribute("id")== null || 
+					session.getAttribute("level")==null) return "signup/login";
 		return "bbs/project-write";
 
 	}
@@ -848,7 +740,7 @@ public class HomeController {
 							+ Integer.toHexString(digest[i] & 0xFF).toUpperCase();
 				
 				strENCData = strENCData.substring(0, 15);
-				article_password = strENCData;
+				article_password = strENCData; 
 			}
 		}
 		
@@ -1034,7 +926,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1086,7 +978,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1139,7 +1031,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1175,11 +1067,8 @@ public class HomeController {
 			return "signup/login";
 		}
 	}
-	
-	@RequestMapping(value = "/bReply", method = RequestMethod.GET)
-	public String bReply(@RequestParam String b, @RequestParam String p, @RequestParam String n,
+	String reply(@RequestParam String b, @RequestParam String p, @RequestParam String n,
 			Locale locale, Model model, HttpSession session, HttpServletRequest request) {
-
 		Btype bt_return = new Btype();
 		String board_type = bt_return.bt_return(n);
 		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -1189,7 +1078,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1201,11 +1090,22 @@ public class HomeController {
 		model.addAttribute("n", n);
 		model.addAttribute("is_lock", tmp.getIs_lock());
 		model.addAttribute("article_password", curr_lock_str);
+		
+		return "complete";
+	}
+	@RequestMapping(value = "/bReply", method = RequestMethod.GET)
+	public String bReply(@RequestParam String b, @RequestParam String p, @RequestParam String n,
+			Locale locale, Model model, HttpSession session, HttpServletRequest request) {
 
 		
-		int level = (Integer) session.getAttribute("level");
-		if (level > 5) return "bbs/board-reply";
-		else return "empty";
+		String result = reply(b, p, n, locale, model, session, request);
+		if(result.equals("complete")) {
+			int level = (Integer) session.getAttribute("level");
+			if (level > 5) return "bbs/board-reply";
+			else return "empty";
+		} else {
+			return result;
+		}
 
 	}
 	
@@ -1213,31 +1113,14 @@ public class HomeController {
 	public String sReply(@RequestParam String b,  @RequestParam String p, @RequestParam String n,
 			Locale locale, Model model, HttpSession session, HttpServletRequest request) {
 
-		Btype bt_return = new Btype();
-		String board_type = bt_return.bt_return(n);
-		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		model.addAttribute("board", b);
-
-		if(session.getAttribute("nickname")==null || 
-				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
-		
-		
-		BoardVO tmp = b_dao.get_column(n);
-		tmp.setAt_pw("NOT ACCESS");
-		model.addAttribute("board_type", board_type);
-		model.addAttribute("tmp", tmp);
-		model.addAttribute("b", b);
-		model.addAttribute("p", p);
-		model.addAttribute("n", n);
-		
-
-		
-		int level = (Integer) session.getAttribute("level");
-		if (level > 5) return "bbs/study-reply";
-		else return "empty";
+		String result = reply(b, p, n, locale, model, session, request);
+		if(result.equals("complete")) {
+			int level = (Integer) session.getAttribute("level");
+			if (level > 5) return "bbs/study-reply";
+			else return "empty";
+		} else {
+			return result;
+		}
 
 	}
 	
@@ -1245,31 +1128,14 @@ public class HomeController {
 	public String pReply(@RequestParam String b,  @RequestParam String p, @RequestParam String n,
 			Locale locale, Model model, HttpSession session, HttpServletRequest request) {
 
-		Btype bt_return = new Btype();
-		String board_type = bt_return.bt_return(n);
-		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		model.addAttribute("board", b);
-
-		if(session.getAttribute("nickname")==null || 
-				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
-		
-		
-		BoardVO tmp = b_dao.get_column(n);
-		tmp.setAt_pw("NOT ACCESS");
-		model.addAttribute("board_type", board_type);
-		model.addAttribute("tmp", tmp);
-		model.addAttribute("b", b);
-		model.addAttribute("p", p);
-		model.addAttribute("n", n);
-		
-
-		
-		int level = (Integer) session.getAttribute("level");
-		if (level > 5) return "bbs/project-reply";
-		else return "empty";
+		String result = reply(b, p, n, locale, model, session, request);
+		if(result.equals("complete")) {
+			int level = (Integer) session.getAttribute("level");
+			if (level > 5) return "bbs/project-reply";
+			else return "empty";
+		} else {
+			return result;
+		}
 
 	}
 	
@@ -1328,7 +1194,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		CommentVO vo = new CommentVO();
 		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -1371,7 +1237,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "sign/login";
+					session.getAttribute("level")==null) return "signup/login";
 		
 		String cmt_id = comment_id;
 		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -1410,5 +1276,83 @@ public class HomeController {
 		db_file.delete_file(at_id, f_id);
 		return "empty";
 	}
+
+	@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+	public String id_check(@RequestParam("id") String id, Locale locale, Model model,
+			HttpServletResponse response) throws IOException {
+		/*
+		 * 
+		 * 회원가입시 아이디 유무를 확인함.
+		 * Z가 리턴되면 입력된 아이디의 문자열이 이상한 것.
+		 * Y는 아이디가 없으므로 회원가입을 해도 됨.
+		 * N는 이미 아이디가 존재하므로 회원가입할 수 없음.
+		 */
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		Member m_dao = context.getBean("MemberDao", Member.class);
+		int num = m_dao.id_check(id);
+		if(num==0) model.addAttribute("returning", "Y");		
+		else model.addAttribute("returning", "N");
+		
+		return "index/returning";
+	}
+	
+	@RequestMapping(value = "/nicknameCheck", method = RequestMethod.POST)
+	public String nicknameCheck(@RequestParam("nickname") String nickname, Locale locale, Model model,
+			HttpServletResponse response) throws IOException {
+		/*
+		 * 
+		 * 회원가입시 닉네임 유무를 확인함.
+		 * Z가 리턴되면 입력된 닉네임의 문자열이 이상한 것.
+		 * Y는 닉네임이 없으므로 회원가입을 해도 됨.
+		 * N는 이미 닉네임이 존재하므로 회원가입할 수 없음.
+		 */
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		Member m_dao = context.getBean("MemberDao", Member.class);
+		int num 	= m_dao.nickname_check(nickname);
+		if(num==0) 	model.addAttribute("returning", "Y"); 
+		else model.addAttribute("returning", "N");
+		
+		return "index/returning";
+	}
+	@RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
+	public String sign_up(Locale locale, Model model, HttpServletRequest request, HttpSession session,
+			HttpServletResponse response) throws IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		MemberVO vo = new MemberVO();
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		Member m_dao = context.getBean("MemberDao", Member.class);
+		String mem_id= request.getParameter("user-id");
+		String mem_pw= request.getParameter("user-pw");
+		String mem_name =request.getParameter("user-name");
+		String mem_nickname=request.getParameter("user-nickname");
+		String mem_email=request.getParameter("user-email");
+		String mem_intro=request.getParameter("user-intro");
+		
+		vo.setUser_id(mem_id);
+		vo.setUser_pw(mem_pw);
+		vo.setUser_name(mem_name);
+		vo.setUser_nickname(mem_nickname);
+		vo.setUser_email(mem_email);
+		vo.setUser_intro(mem_intro);
+		
+		if( m_dao.insert(vo) ){ 
+			if(session.getAttribute("id")!=null
+					|| session.getAttribute("nickname")!=null
+						|| session.getAttribute("level")!=null) {
+				//세션이 하나라도 남아있으면 초기화 시켜줌
+				session.invalidate();
+			}
+			session.setAttribute("id", mem_id);
+			session.setAttribute("nickname", mem_nickname);
+			session.setAttribute("level", 3);
+			session.setMaxInactiveInterval(60 * 60 * 60);
+		} 	
+		String url = "/index";
+		response.sendRedirect(url);
+		return "empty";
+	}
+	
 	
 }

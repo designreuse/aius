@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -33,7 +33,8 @@
 							<a href="/index"><font size="40px" color="#8C97A8"
 								style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element"><a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a></div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i>
 							<span class="nav-label">메인으로</span></a></li>

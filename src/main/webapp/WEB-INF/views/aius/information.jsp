@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -32,7 +32,8 @@
 						<div class="dropdown profile-element" style="text-align: center">
 							<a href="/index"><font size="40px" color="#8C97A8" style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element"><a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a></div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i>
 							<span class="nav-label">메인으로</span></a></li>
@@ -80,7 +81,7 @@
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title" style="display:inline-table;">
-								<h3>홈페이지 소개</h3><br><br>
+								<h3>동아리 소개</h3><br><br>
 								<p>위키백과(Wiki百科, 듣기 (도움말·정보)) 혹은 위키피디어(Wikipedia 듣기 (도움말·정보))는 지미 웨일스가 제작한 모두가 함께 만들어 가며 누구나 자유롭게 쓸 수 있는 다언어판 인터넷 백과사전이다. 대표적인 집단 지성의 사례로 평가받고 있다. 배타적인 저작권 라이선스가 아닌 자유 콘텐츠로 사용에 제약을 받지 않는다.
 2001년 1월 15일에 시작된 위키백과는 비영리 단체인 위키미디어 재단에서 운영하고 있다. 2012년 3월 기준으로 영어판 388만여 개, 한국어판 302,118 개 를 비롯하여 280여 언어판을 합하면 2100만여개의 글이 수록되어 있으며 꾸준히 성장하고 있다.
 위키백과 영어판은 전문가들이 작성했던 백과사전인 누피디어(지금은 없어짐)를 보완하여 2001년 1월 15일에 만들어졌다. 지미 웨일스와 래리 생어는 2001년에 위키백과의 공동창업자로 인정받았다.</p>

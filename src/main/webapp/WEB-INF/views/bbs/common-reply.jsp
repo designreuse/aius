@@ -18,7 +18,7 @@
 <input type="hidden" name="at_re_step" value="${tmp.at_re_step}">
 <input type="hidden" name="m" value="r">
 <input type="hidden" name="at_id" value="${tmp.at_id}">
-<textarea id="contents" name="contents" required="required"
+<textarea id="contents" name="contents" required="required" style="width: 100%; min-height: 200px;"
 	placeholder=" 내용을 입력해 주세요" class="bor_r_7 bor_d"></textarea>
 <div class="row" style="margin-top: 15px;">
 	<div class="col-lg-12">

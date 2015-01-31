@@ -10,31 +10,35 @@ var test = function() {
 	alert("asdf");
 }
 $(function() {
-	$('#file_delete').click(function() {
-		if(confirm("파일 삭제시 복구할 수 없습니다.\n파일을 삭제하시겠습니까?")==false) return false;
+	$('body').on('click', '#file_delete', function() {
+		if (confirm("파일 삭제시 글의 수정을 \n하지 않을 경우에도 복구할 수 없습니다.\n정말로 파일을 삭제하시겠습니까?") == false)
+			return false;
 		var article_id = $(this).data("a");
 		var file_id = $(this).data("b");
-		$(this).parent().parent().html("<input type=\"file\" name=\"file\" style=\"width: 100%;\">");
-		$.ajax({
-			type : "get",
-			url : "fileDelete",
-			dataType : "text",
-			data : {
-				article_id : article_id,
-				file_id : file_id
-			},
-			success : function(data) {
-			},
-			error : function(e, xhr) {
-				alert(e.status + ">" + xhr)
-			},
-			cache : false,
-			async : false,
-			contentType : "application/x-www-form-urlencoded;charset=utf-8"
-		})
+		$(this)
+				.parent()
+				.parent()
+				.html(
+						"<input type=\"file\" name=\"file\" style=\"width: 100%;\">");
+		$
+				.ajax({
+					type : "get",
+					url : "fileDelete",
+					dataType : "text",
+					data : {
+						article_id : article_id,
+						file_id : file_id
+					},
+					success : function(data) {
+					},
+					error : function(e, xhr) {
+						alert(e.status + ">" + xhr)
+					},
+					cache : false,
+					async : false,
+					contentType : "application/x-www-form-urlencoded;charset=utf-8"
+				})
 	});
-	
-	
 	$('#login_id_input').focus();
 
 	$('#login_pw_input').keydown(function(event) {
@@ -336,64 +340,68 @@ $(function() {
 		}
 	});
 
-	$('button#cmt_write').click(function(event) {
+	$('button#cmt_write')
+			.click(
+					function(event) {
 
-			var p = $('#cmt_infor input[name="p"]').val();
-			var b = $('#cmt_infor input[name="b"]').val();
-			var article_id = $(
-				'#cmt_infor input[name="article_id"]').val();
-			var comment_writer = $(
-				'#cmt_infor input[name="comment_writer"]')
-					.val();
-			var comment_data = $(
-				'#cmt_infor input[name="comment_data"]').val();
+						var p = $('#cmt_infor input[name="p"]').val();
+						var b = $('#cmt_infor input[name="b"]').val();
+						var article_id = $(
+								'#cmt_infor input[name="article_id"]').val();
+						var comment_writer = $(
+								'#cmt_infor input[name="comment_writer"]')
+								.val();
+						var comment_data = $(
+								'#cmt_infor input[name="comment_data"]').val();
 
-			if (comment_data.length == 0) {
-				alert("내용을 입력하세요.");
-				$('#cmt_infor textarea[name="comment_data"]')
-					.focus();
-						return false;
-			}
-			if (comment_data.length > 999) {
-				alert(alert("최대 1,000글자만 입력해 주세요. (현재 "
-					+ comment_data.length + "글자.)"));
-						$('#cmt_infor textarea[name="comment_data"]')
-							.focus();
-								return false;
-			}
-			$.ajax({
-					type : "post",
-					url : "cmtWrite",
-					dataType : "text",
-					data : {
-						p : p,
-						b : b,
-						article_id : article_id,
-						comment_writer : comment_writer,
-						comment_data : comment_data
-					},
-					beforeSend : function(xhr) {
-					},
-					success : function(data) {
-						$('input[name="comment_data"]').val("");
-						$('input[name="comment_data"]').focus();
-						$('div#cmt_write').after(data);
-					},
-					complete : function(xhr, textStatus) {
-					},
-					error : function(e, xhr) {
-					},
-					cache : false,
-					async : false,
-					contentType : "application/x-www-form-urlencoded;charset=utf-8"
-			});
-	});
+						if (comment_data.length == 0) {
+							alert("내용을 입력하세요.");
+							$('#cmt_infor textarea[name="comment_data"]')
+									.focus();
+							return false;
+						}
+						if (comment_data.length > 999) {
+							alert(alert("최대 1,000글자만 입력해 주세요. (현재 "
+									+ comment_data.length + "글자.)"));
+							$('#cmt_infor textarea[name="comment_data"]')
+									.focus();
+							return false;
+						}
+						$
+								.ajax({
+									type : "post",
+									url : "cmtWrite",
+									dataType : "text",
+									data : {
+										p : p,
+										b : b,
+										article_id : article_id,
+										comment_writer : comment_writer,
+										comment_data : comment_data
+									},
+									beforeSend : function(xhr) {
+									},
+									success : function(data) {
+										$('input[name="comment_data"]').val("");
+										$('input[name="comment_data"]').focus();
+										$('div#cmt_write').after(data);
+									},
+									complete : function(xhr, textStatus) {
+									},
+									error : function(e, xhr) {
+									},
+									cache : false,
+									async : false,
+									contentType : "application/x-www-form-urlencoded;charset=utf-8"
+								});
+					});
 	$('body').on('click', '#cmt_delete', function() {
-		if(confirm("정말 삭제하겠습니까?")==false) return false;
+		if (confirm("정말 삭제하겠습니까?") == false)
+			return false;
 		var tmp = $(this).parent().parent().parent().parent().parent();
 		var id = $(this).data("a");
 		var article_id = $(this).data("b");
-		
+
 		$.ajax({
 			type : "get",
 			url : "cmtDelete",
@@ -404,19 +412,116 @@ $(function() {
 			},
 			success : function(data) {
 				tmp.remove();
-				
+
 			},
 			error : function(e, xhr) {
-				alert(e.status + ">" + xhr);	
+				alert(e.status + ">" + xhr);
 			},
 			cache : false,
 			async : false,
 			contentType : "application/x-www-form-urlencoded;charset=utf-8"
 		});
 	});
+
+	$('#user-register').submit(function() {
+		/*
+		 * 유효성 검사 비밀번호 같은지 확인 아이디 중복 확인 닉네임 중복 확인 후 토스.
+		 */
+		var user_id = $('#user-id').val();
+		var user_name = $('#user-name').val();
+		var user_nickname = $('#user-nickname').val();
+		var user_email = $('#user-email').val();
+		var user_pw = $('#user-pw').val();
+		var user_pw_check = $('#user-pw-check').val();
+		var user_intro = $('#user-intro').val();
 		
-	
-	
+		var regexp_id = /^[a-z0-9]{4,16}$/;
+		if (!regexp_id.test(user_id)) {
+			alert("아이디는 소문자, 숫자만 입력하실 수 있습니다. ( 최소 5글자, 최대 16글자 )"); 
+			return false;
+		}
+		var regexp_name = /^[가-힣]{2,}$/;
+		if (!regexp_name.test(user_name)) {
+			alert("이름은 한글만 입력하실 수 있습니다. ( 최소 두글자 이상 )");
+			return false;
+		}
+		var regexp_nickname = /^[a-z가-힣0-9]{3,6}$/;
+		if (!regexp_nickname.test(user_nickname)) {
+			alert("닉네임은 최소 세글자, 최대 6글자까지 입력하실 수 있습니다. ( 특수문자, 기호등 제외 )");
+			return false;
+		}
+		if(user_pw.length!=user_pw_check.length) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		} else {
+			if(user_pw.length < 8) {
+				alert("비밀번호는 최소 8글자 이상 입력해야만 합니다.");
+				return false;
+			}
+			if(user_pw_check.length < 8) {
+				alert("비밀번호는 최소 8글자 이상 입력해야만 합니다.");
+				return false;
+			}
+			if(user_pw != user_pw_check) {
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			}
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : "idCheck",
+			dataType : "text",
+			data : {
+				id : $(this).val()
+			},
+			success : function(data) {
+				data = data.trim();
+				data = data.substring(0, 1);
+				if (data == "Y") {
+				} else {
+					alert("이미 사용중인 아이디입니다. 다른 아이디를 사용해주세요.");
+					return false;
+				} 
+			},
+			error : function(e, xhr) {
+				alert(e.status + ">" + xhr)
+			},
+			cache : false,
+			async : false,
+			contentType : "application/x-www-form-urlencoded;charset=utf-8"
+		})
+		
+		
+		$.ajax({
+			type : "post",
+			url : "nicknameCheck",
+			dataType : "text",
+			data : {
+				nickname : user_nickname
+			},
+			success : function(data) {
+				data = data.trim();
+				data = data.substring(0, 1);
+				if (data == "Y") {
+					$('font.mem_nickname').html("사용 가능");
+				} else {
+					alert("이미 사용중인 닉네임입니다. 다른 닉네임을 사용해 주세요.");
+					return false;
+				} 
+			},
+			error : function(e, xhr) {
+				alert(e.status + ">" + xhr)
+			},
+			cache : false,
+			async : false,
+			contentType : "application/x-www-form-urlencoded;charset=utf-8"
+		})
+		/*
+		 * 간략한 유효성 검사 마무리.
+		 * 여기서부터는 중복검사 들어가야 함.
+		 */
+	});
 
 });
 function b_hit_up(_id, _board, _p) {

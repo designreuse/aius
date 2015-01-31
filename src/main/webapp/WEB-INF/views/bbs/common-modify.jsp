@@ -31,10 +31,15 @@
 <input type="hidden" name="m" value="m">
 <input type="hidden" name="at_id" value="${n}">
 
+
+<textarea id="contents" name="contents" required="required" style="width: 100%; min-height: 200px;"
+	placeholder=" 내용을 입력해 주세요" class="bor_r_7 bor_d">${content}</textarea>
+
+
 <c:if test="${files_size > 0}">
 	<c:forEach var="file" items="${files}" varStatus="curr">
 
-		<div class="row" style="margin-top: 0px;">
+		<div class="row" <c:if test="${curr.count=='1'}">style="margin-top: 15px;"</c:if>>
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins margin-bottom">
 
@@ -60,7 +65,7 @@
 </c:if>
 <c:choose>
 	<c:when test="${files_size == '0'}">
-		<div class="row" style="margin-top: 0px;">
+		<div class="row" style="margin-top: 15px;">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins margin-bottom">
 					<div id="file_area" class="ibox-title">
@@ -80,7 +85,7 @@
 		</div>
 	</c:when>
 	<c:when test="${files_size == '1'}">
-		<div class="row" style="margin-top: 0px;">
+		<div class="row" style="margin-top: 0;">
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins margin-bottom">
 					<div id="file_area" class="ibox-title">
@@ -93,9 +98,6 @@
 	<c:otherwise></c:otherwise>
 </c:choose>
 
-
-<textarea id="contents" name="contents" required="required"
-	placeholder=" 내용을 입력해 주세요" class="bor_r_7 bor_d">${content}</textarea>
 
 <script type="text/javascript">
 	CKEDITOR.replace('contents', {

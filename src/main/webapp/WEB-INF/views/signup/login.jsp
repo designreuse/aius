@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -36,7 +36,8 @@
 						<div class="dropdown profile-element" style="text-align: center">
 							<a href="/index"><font size="40px" color="#8C97A8" style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element"><a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a></div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i> <span
 							class="nav-label">메인으로</span></a></li>
@@ -84,11 +85,11 @@
 					<form class="m-t" role="form" id="login_form">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Username"
-								id="login_id_input" required="">
+								id="login_id_input" required="required">
 						</div>
 						<div class="form-group">
 							<input type="password" class="form-control" id="login_pw_input"
-								placeholder="Password" required="">
+								placeholder="Password" required="required">
 						</div>
 						<button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 						<a class="btn btn-sm btn-white btn-block" href="/register">Create

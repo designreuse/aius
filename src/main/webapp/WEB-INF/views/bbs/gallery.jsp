@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -30,9 +30,13 @@
 				<ul class="nav" id="side-menu">
 					<li class="nav-header">
 						<div class="dropdown profile-element" style="text-align: center">
-							<a href="/index"><font size="40px" color="#8C97A8" style="margin: 0;">WHO</font></a>
+							<a href="/index"><font size="40px" color="#8C97A8"
+								style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element">
+							<a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a>
+						</div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i> <span
 							class="nav-label">메인으로</span></a></li>
@@ -141,17 +145,18 @@
 
 			</div>
 		</div>
-		<!-- Mainly scripts -->
-		<script src="./resources/js/jquery-2.1.1.js"></script>
-		<script src="./resources/js/bootstrap.min.js"></script>
-		<script src="./resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-		<script
-			src="./resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	</div>
+	<!-- Mainly scripts -->
+	<script src="./resources/js/jquery-2.1.1.js"></script>
+	<script src="./resources/js/bootstrap.min.js"></script>
+	<script src="./resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script
+		src="./resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-		<!-- Custom and plugin javascript -->
-		<script src="./resources/js/inspinia.js"></script>
-		<script src="./resources/js/aius.js"></script>
-		<script src="./resources/js/plugins/pace/pace.min.js"></script>
+	<!-- Custom and plugin javascript -->
+	<script src="./resources/js/inspinia.js"></script>
+	<script src="./resources/js/aius.js"></script>
+	<script src="./resources/js/plugins/pace/pace.min.js"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -32,7 +32,8 @@
 						<div class="dropdown profile-element" style="text-align: center">
 							<a href="/index"><font size="40px" color="#8C97A8" style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element"><a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a></div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i>
 							<span class="nav-label">메인으로</span></a></li>
@@ -73,33 +74,39 @@
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-			<div class="middle-box text-center loginscreen   animated"style="margin-top: -400px;">
+			<div class="middle-box text-center loginscreen" style="margin-top: -480px;">
 				<p>Create account to see it in action.</p>
-				<form class="m-t" role="form" action="login.html">
+				<form class="m-t" role="form" action="/registerProcess" id="user-register" method="post">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Name"
-							required="">
+						<input type="text" class="form-control" placeholder="아이디를 입력해주세요." id="user-id" name="user-id"
+							required="required">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Email"
-							required="">
+						<input type="text" class="form-control" placeholder="이름을 입력해주세요." id="user-name" name="user-name"
+							required="required">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Password"
-							required="">
+						<input type="text" class="form-control" placeholder="닉네임을 입력해주세요." id="user-nickname" name="user-nickname"
+							required="required">
 					</div>
 					<div class="form-group">
-						<div class="checkbox i-checks">
-							<label> <input type="checkbox"><i></i> Agree the
-								terms and policy
-							</label>
-						</div>
+						<input type="email" class="form-control" placeholder="이메일을 입력해주세요." id="user-email" name="user-email"
+							required="required">
 					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요." id="user-pw" name="user-pw"
+							required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="비밀번호를 다시 입력해주세요." id="user-pw-check" name="user-pw-check"
+							required="required">
+					</div>
+					<div class="form-group">
+						<input type="text" id="user-intro" class="form-control" placeholder="간결한 소개 부탁드립니다." name="user-intro" style="min-height: 200px;">
+					</div>
+					
 					<button type="submit" class="btn btn-primary block full-width m-b">Register</button>
 
-					<p class="text-muted text-center">
-						<small>Already have an account?</small>
-					</p>
 					<a class="btn btn-sm btn-white btn-block" href="/login">Login</a>
 				</form>
 			</div>

@@ -41,13 +41,13 @@ public class Member {
 	        strENCData = strENCData + Integer.toHexString(digest[i] & 0xFF).toUpperCase();
 	    }
 
+		strENCData = strENCData.substring(0, 15);
 
 		String mem_name = vo.getUser_name();
 		String mem_intro = vo.getUser_intro();
 
 		String mem_nickname = vo.getUser_nickname();
 		String mem_email = vo.getUser_email();
-		String mem_phone = vo.getUser_phone();
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -57,8 +57,8 @@ public class Member {
 		try {
 			String Query = "INSERT INTO meta_user "
 					+ "(MEM_ID, MEM_PW, MEM_NAME, MEM_NICKNAME,"
-					+ "MEM_EMAIL, MEM_PHONE, MEM_INTRO)"
-					+ "VALUES(?, ?, ?, ?, ?, ?, ? )";
+					+ "MEM_EMAIL, MEM_INTRO)"
+					+ "VALUES(?, ?, ?, ?,  ?, ? )";
 
 			pstmt = conn.prepareStatement(Query);
 
@@ -67,8 +67,7 @@ public class Member {
 			pstmt.setString(3, mem_name);
 			pstmt.setString(4, mem_nickname);
 			pstmt.setString(5, mem_email);
-			pstmt.setString(6, mem_phone);
-			pstmt.setString(7, mem_intro);
+			pstmt.setString(6, mem_intro);
 			pstmt.executeUpdate();
 		} catch (SQLException ee1) {
 			ee1.printStackTrace();

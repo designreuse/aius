@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>INSPINIA | Main view</title>
+<title>Who will change our world?</title>
 
 <link href="./resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="./resources/font-awesome/css/font-awesome.css"
@@ -39,7 +39,8 @@
 						<div class="dropdown profile-element" style="text-align: center">
 							<a href="/index"><font size="40px" color="#8C97A8" style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element">IN+</div>
+						<div class="logo-element"><a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a></div>
 					</li>
 					<li><a href="/"><i class="fa fa-th-large"></i> <span
 							class="nav-label">메인으로</span></a></li>
@@ -52,14 +53,14 @@
 							<li><a href="/register">회원 가입</a></li>
 							<li><a href="#">가입 신청</a></li>
 						</ul></li>
-					<li class="active"><a href="#"><i class="fa fa-th-large"></i>
+					<li><a href="#"><i class="fa fa-th-large"></i>
 							<span class="nav-label">게시판</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="board?b=notice&p=1">공지사항</a></li>
 							<li><a href="board?b=freeboard&p=1">자유 게시판</a></li>
 							<li><a href="gallery">갤러리</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-th-large"></i> <span
+					<li class="active"><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">스터디</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="study?b=html5&p=1">HTML5</a></li>
@@ -67,7 +68,7 @@
 							<li><a href="study?b=vision&p=1">Computer Vision</a></li>
 							<li><a href="study?b=pattern&p=1">패턴 인식</a></li>
 						</ul></li>
-					<li class="active"><a href="#"><i class="fa fa-th-large"></i> <span
+					<li><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">프로젝트</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="project?b=tradio&p=1">트레지오</a></li>
