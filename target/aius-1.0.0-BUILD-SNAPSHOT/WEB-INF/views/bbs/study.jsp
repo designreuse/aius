@@ -47,15 +47,15 @@
 							<li><a href="/register">회원 가입</a></li>
 							<li><a href="#">가입 신청</a></li>
 						</ul></li>
-					<li><a href="#"><i class="fa fa-th-large"></i>
-							<span class="nav-label">게시판</span> <span class="fa arrow"></span></a>
+					<li><a href="#"><i class="fa fa-th-large"></i> <span
+							class="nav-label">게시판</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="board?b=notice&p=1">공지사항</a></li>
 							<li><a href="board?b=freeboard&p=1">자유 게시판</a></li>
 							<li><a href="gallery">갤러리</a></li>
 						</ul></li>
-					<li class="active"><a href="#"><i class="fa fa-th-large"></i> <span
-							class="nav-label">스터디</span> <span class="fa arrow"></span></a>
+					<li class="active"><a href="#"><i class="fa fa-th-large"></i>
+							<span class="nav-label">스터디</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li><a href="study?b=html5&p=1">HTML5</a></li>
 							<li><a href="study?b=spring&p=1">Spring</a></li>
@@ -235,13 +235,12 @@
 					</c:if>
 
 					<c:if test="${ id ne null }">
-						<a href="bWrite?b=${board}&p=${curr_page_num}"><button
+						<a href="sWrite?b=${board}&p=${curr_page_num}"><button
 								type="button" class="btn btn-white btn-height-34">글쓰기</button></a>
 					</c:if>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<!-- Mainly scripts -->

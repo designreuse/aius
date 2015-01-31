@@ -235,7 +235,7 @@
 					</c:if>
 
 					<c:if test="${ id ne null }">
-						<a href="bWrite?b=${board}&p=${curr_page_num}"><button
+						<a href="pWrite?b=${board}&p=${curr_page_num}"><button
 								type="button" class="btn btn-white btn-height-34">글쓰기</button></a>
 					</c:if>
 				</div>

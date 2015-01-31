@@ -81,10 +81,25 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins" style="margin-bottom: 10px;">
-							<div class="ibox-title">${vo.at_title}</div>
+							<div class="ibox-title"><h5>#${vo.at_id} ${vo.at_title} </h5></div>
+							<c:if test="${files_size > 0}">
+								<div class="ibox-content">
+									<c:forEach var="file" items="${files}" varStatus="curr">
+											<img src="./resources/btn-image/download-alt.png"
+												style="height: 15px; width: 15px;"> <a
+												href="/fileDown?filePath=${file.attach_file_path}&fileName=${file.attach_file_name}">
+												${file.attach_file_name} (${file.file_size}K)
+												${file.file_upload_date} ${file.file_upload_time }</a>
+											<c:if test="${curr.count != files_size}">
+											<br>
+											</c:if>
+									</c:forEach>
+								</div>
+							</c:if>
 							<div class="ibox-content"
 								style="padding-top: 10px; padding-bottom: 3px;">
 								${vo.at_content}</div>
+
 							<div class="ibox-content"
 								style="padding-top: 10px; padding-bottom: 9px;">
 								<img src="./resources/btn-image/user.png" class="btn-image-aius"
@@ -101,6 +116,7 @@
 										${vo.at_time}
 								</c:if>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -125,8 +141,9 @@
 
 							<c:if test="${level ne null && nickname ne null && id ne null}">
 								<c:if test="${level >= '9'|| nickname eq vo.at_writer}">
-									<a href="/bModify?b=${b}&p=${p}&n=${n}"><button type="button"
-											class="btn btn-default btn-xs btn-left" id="bModify">수정</button></a>
+									<a href="/bModify?b=${b}&p=${p}&n=${n}"><button
+											type="button" class="btn btn-default btn-xs btn-left"
+											id="bModify">수정</button></a>
 								</c:if>
 								<c:if
 									test="${ (level >= '9'|| nickname eq vo.at_writer) && vo.at_deleted eq 'N'}">
@@ -153,40 +170,46 @@
 									<input type="hidden" name="comment_writer" value="${nickname}">
 									<input type="hidden" name="p" value="${p}"> <input
 										type="hidden" name="b" value="${b}>"> <input
-										type="text" class="form-control" name="comment_data" style="height: 120px;">
-                           		 	<button type="button" class="btn btn-default" style="margin-top: 10px;" id="cmt_write">댓글 입력</button>
+										type="text" class="form-control" name="comment_data"
+										style="height: 120px;">
+									<button type="button" class="btn btn-default"
+										style="margin-top: 10px;" id="cmt_write">댓글 입력</button>
 								</form>
 							</div>
 						</div>
 					</c:if>
 				</c:if>
-				
-				
+
+
 				<c:forEach var="comment" items="${comments}" varStatus="status">
-				
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="ibox float-e-margins margin-bottom " >
-							<div class="ibox-title"
-								style="width: 100%; display: inline-table;">
-								<p>
-									<strong>${comment.cmt_writer} - </strong>
-									<font size="2.9em" color="#005766">${comment.cmt_date} ${comment.cmt_time}</font>
-									<c:if test="${id ne null && (nickname eq comment.cmt_writer || level >= '9')}">
-										<input type="image" class="delete_image" value="삭제" id="cmt_delete" src="./resources/btn-image/delete.png"  data-a="${comment.cmt_id}" data-b="${comment.at_id}">
-									</c:if>
-								</p>
-								<p>${comment.cmt_data} </p>
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins margin-bottom ">
+								<div class="ibox-title"
+									style="width: 100%; display: inline-table;">
+									<p>
+										<strong>${comment.cmt_writer} - </strong> <font size="2.9em"
+											color="#005766">${comment.cmt_date}
+											${comment.cmt_time}</font>
+										<c:if
+											test="${id ne null && (nickname eq comment.cmt_writer || level >= '9')}">
+											<input type="image" class="delete_image" value="삭제"
+												id="cmt_delete" src="./resources/btn-image/delete.png"
+												data-a="${comment.cmt_id}" data-b="${comment.at_id}">
+										</c:if>
+									</p>
+									<p>${comment.cmt_data}</p>
+								</div>
+
+
 							</div>
-
-
 						</div>
 					</div>
-				</div>
 				</c:forEach>
-				
-				
-				
+
+
+
 
 
 			</div>

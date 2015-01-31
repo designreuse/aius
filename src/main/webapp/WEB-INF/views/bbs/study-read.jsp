@@ -79,7 +79,21 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins" style="margin-bottom: 10px;">
-							<div class="ibox-title">${vo.at_title}</div>
+							<div class="ibox-title"><h5>#${vo.at_id} ${vo.at_title} </h5></div>
+							<c:if test="${files_size > 0}">
+								<div class="ibox-content">
+									<c:forEach var="file" items="${files}">
+											<img src="./resources/btn-image/download-alt.png"
+												style="height: 15px; width: 15px;"> <a
+												href="/fileDown?filePath=${file.attach_file_path}&fileName=${file.attach_file_name}">
+												${file.attach_file_name} (${file.file_size}K)
+												${file.file_upload_date} ${file.file_upload_time }</a>
+												<c:if test="${curr.count != files_size}">
+											<br>
+											</c:if>
+									</c:forEach>
+								</div>
+							</c:if>
 							<div class="ibox-content"
 								style="padding-top: 10px; padding-bottom: 3px;">
 								${vo.at_content}</div>

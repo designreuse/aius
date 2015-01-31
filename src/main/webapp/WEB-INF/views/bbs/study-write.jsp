@@ -86,7 +86,7 @@
 				<div class="row">
 					<div class="col-lg-12" style="border-radius: 5px; display: inline-block;">
 						<h2>글쓰기</h2>
-						<form method="post" action="/sWriteProcess">
+						<form method="post" action="/sWriteProcess" enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="checkbox" id="is_lock" name="is_lock" /> <label
 									for="is_lock"><font size="2.6em">비밀로 하기</font></label><br>
@@ -106,7 +106,27 @@
 							<input type="hidden" name="m" value="w">
 							<textarea id="contents" name="contents" required="required"
 								placeholder=" 내용을 입력해 주세요" class="bor_r_7 bor_d"></textarea>
-
+							
+							<div class="row" style="margin-top: 15px;">
+								<div class="col-lg-12">
+									<div class="ibox float-e-margins margin-bottom">
+											<div id="file_area" class="ibox-title">
+												<input type="file" name="file" style="width: 100%;">
+												
+											</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 0px;">
+								<div class="col-lg-12">
+									<div class="ibox float-e-margins margin-bottom">
+											<div id="file_area" class="ibox-title">
+												<input type="file" name="file" style="width: 100%;">
+											</div>
+									</div>
+								</div>
+							</div>
 							<script type="text/javascript">
 								CKEDITOR
 										.replace(

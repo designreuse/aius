@@ -88,7 +88,7 @@
 					<div class="col-lg-12 "
 						style="border-radius: 5px; display: inline-block;">
 						<h2>글쓰기</h2>
-						<form method="post" action="/bWriteProcess" id="bWriteProcess">
+						<form method="post" action="/bWriteProcess" id="bWriteProcess" enctype="multipart/form-data">
 							<div class="form-group">
 								<input type="checkbox" id="is_lock" name="is_lock" /> <label
 									for="is_lock"><font size="2.6em">비밀로 하기</font></label><br>

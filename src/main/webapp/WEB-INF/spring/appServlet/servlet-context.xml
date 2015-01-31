@@ -40,22 +40,24 @@
 		<beans:property name="order" value="1"/>
 	</beans:bean>
 	
-	
-	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	 <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <beans:property name="order" value="0"/>
     </beans:bean>
     
-	<context:component-scan base-package="com.spring.aius" />
-	
-	
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
 		 <!-- setting maximum upload size -->
 		<beans:property name="maxUploadSize" value="10000000" />
 
-
-
 	</beans:bean>
+	
+	<beans:bean id="download" class="com.spring.controller.DownloadView" >
+	</beans:bean>
+		
+    
+	<context:component-scan base-package="com.spring.aius" />
+	
+	
 	
 </beans:beans>

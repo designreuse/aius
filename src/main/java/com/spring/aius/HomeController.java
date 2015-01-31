@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -208,6 +209,11 @@ public class HomeController {
 		model.addAttribute("content", content);
 		model.addAttribute("comments", comments);
 
+		AttachFile f_dao = new DaoFactory().AttachFileDao();
+		Vector<FileVO> f_vo = f_dao.select_file(Integer.parseInt(num));
+
+		model.addAttribute("files", f_vo);
+		model.addAttribute("files_size", f_vo.size());
 		
 		flag = false;
 		return "bbs/board-read";
@@ -292,7 +298,11 @@ public class HomeController {
 		model.addAttribute("content", content);
 		model.addAttribute("comments", comments);
 		
-		
+		AttachFile f_dao = new DaoFactory().AttachFileDao();
+		Vector<FileVO> f_vo = f_dao.select_file(Integer.parseInt(num));
+
+		model.addAttribute("files", f_vo);
+		model.addAttribute("files_size", f_vo.size());
 		flag = false;
 		return "bbs/study-read";
 	}
@@ -376,6 +386,12 @@ public class HomeController {
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
 		model.addAttribute("comments", comments);
+		
+		AttachFile f_dao = new DaoFactory().AttachFileDao();
+		Vector<FileVO> f_vo = f_dao.select_file(Integer.parseInt(num));
+
+		model.addAttribute("files", f_vo);
+		model.addAttribute("files_size", f_vo.size());
 		
 		flag = false;
 		return "bbs/project-read";
@@ -790,11 +806,8 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping(value = "/bWriteProcess", method = RequestMethod.POST)
-	public String bWriteProcess(@RequestParam("file") MultipartFile[] files,Locale locale, Model model, HttpSession session, 
-			HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
-
-		System.out.println("asdf");
+	String writeProcess(Locale locale, Model model, HttpSession session, @RequestParam("file") MultipartFile[] files,
+			HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
@@ -808,6 +821,7 @@ public class HomeController {
 
 		String article_title = request.getParameter("title");
 		String article_write = request.getParameter("at_writer");
+		System.out.println(article_write);
 		String article_password = request.getParameter("at_pass");
 		String checked = request.getParameter("is_lock");
 		
@@ -865,6 +879,11 @@ public class HomeController {
 		String article_type = request.getParameter("at_type");
 		String article_content = request.getParameter("contents");
 	
+		
+
+		article_title = new String(article_title.getBytes("8859_1"),"utf-8");
+		article_write = new String(article_write.getBytes("8859_1"),"utf-8");
+		article_content = new String(article_content.getBytes("8859_1"),"utf-8");
 		article_content = article_content.replaceAll("<script", "&lt;script");
 		article_content = article_content.replaceAll("</script", "&lt;/script");
 		article_content = article_content.replaceAll("<iframe", "&lt;iframe");
@@ -893,7 +912,7 @@ public class HomeController {
 		} else if (request.getParameter("m").equals("m")) {
 			article_id = b_dao.modify(vo);
 		}
-		
+		System.out.println("asdf");
 		
 		
 		for (int i = 0; i < files.length; i++) {
@@ -924,9 +943,9 @@ public class HomeController {
 				// Creating the directory to store file
 				String rootPath = System.getProperty("catalina.home");
 				System.out.println(rootPath);
-				File dir = new File(rootPath + File.separator + "tmpFiles\\"
+				File dir = new File(rootPath + File.separator + "tmpFiles/"
 						+ article_id);
-				String path = rootPath + File.separator + "tmpFiles\\"
+				String path = rootPath + File.separator + "tmpFiles/"
 						+ article_id;
 				if (!dir.exists())
 					dir.mkdirs();
@@ -952,235 +971,55 @@ public class HomeController {
 				System.out.println("파일업로드 실패");
 			}
 		}
-		
-		
-		// //////////////////////////////////////////////////////
-		String url = "bRead?b=" + article_type + "&p=1&n=" + article_id;
-		response.sendRedirect(url);
 		vo.setAt_id(article_id);
 
 		model.addAttribute("b", article_type);
 		model.addAttribute("vo", vo);
-		return "bbs/board-read";
+		
+		// //////////////////////////////////////////////////////
+		String url = "Read?b=" + article_type + "&p=1&n=" + article_id;
+		
+		
+		
+		return url;
+	}
+	@RequestMapping(value = "/bWriteProcess", method = RequestMethod.POST)
+	public String bWriteProcess(Locale locale, Model model, HttpSession session, @RequestParam("file") MultipartFile[] files,
+			HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
+
+		String result = writeProcess(locale, model, session, files, response, request);
+		result = "b" + result;
+		response.sendRedirect(result);
+		
+		if(result.equals("signup/login")) 
+			return "bbs/board-read";
+		else return result;
 	}
 	
 	@RequestMapping(value = "/sWriteProcess", method = RequestMethod.POST)
-	public String sWriteProcess(Locale locale, Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
+	public String sWriteProcess(Locale locale, Model model, HttpSession session, @RequestParam("file") MultipartFile[] files,
+			HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
 
-		System.out.println("asdf");
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+		String result = writeProcess(locale, model, session, files, response, request);
+		result = "s" + result;
+		response.sendRedirect(result);
 		
-		if(session.getAttribute("nickname")==null || 
-				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "signup/login";
-		
-		BoardVO vo = new BoardVO();
-		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		String article_title = request.getParameter("title");
-		String article_write = request.getParameter("at_writer");
-		String article_password = request.getParameter("at_pass");
-		String checked = request.getParameter("is_lock");
-		
-		String is_lock = "Y";
-		if ( checked ==null || article_password == null || article_password.equals("")) {
-			is_lock = "N";
-			article_password = "";
-		} else {
-			if( !article_password.equals(curr_Lock_str_md5) ) {
-				//현재 비밀번호가 바뀐 상태임.
-				MessageDigest md = null;
-				try {
-					md = MessageDigest.getInstance("md5");
-				} catch (NoSuchAlgorithmException e1) {
-					e1.printStackTrace();
-				}
-
-				byte[] bytData = article_password.getBytes();
-				md.update(bytData);
-				byte[] digest = md.digest();
-				String strENCData = "";
-				for (int i = 0; i < digest.length; i++)
-					strENCData = strENCData
-							+ Integer.toHexString(digest[i] & 0xFF).toUpperCase();
-				
-				strENCData = strENCData.substring(0, 15);
-				article_password = strENCData;
-			}
-		}
-		int article_hit = 0;
-		int article_re_lev = 0;
-		int article_ref = 0;
-		int article_re_step = 0;
-		int article_id = 0;
-		if (request.getParameter("at_id") != null
-				&& request.getParameter("at_id").trim().length() != 0) {
-			article_id = Integer.parseInt(request.getParameter("at_id"));
-		}
-		if (request.getParameter("at_re_lev") != null
-				&& request.getParameter("at_re_lev").trim().length() != 0) {
-			article_re_lev = Integer.parseInt(request
-					.getParameter("at_re_lev"));
-		}
-		if (request.getParameter("at_ref") != null
-				&& request.getParameter("at_ref").trim().length() != 0) {
-			article_ref = Integer.parseInt(request.getParameter("at_ref"));
-		}
-		if (request.getParameter("at_re_step") != null
-				&& request.getParameter("at_re_step").trim().length() != 0) {
-			article_re_step = Integer.parseInt(request
-					.getParameter("at_re_step"));
-		}
-		String article_type = request.getParameter("at_type");
-		String article_content = request.getParameter("contents");
-	
-		article_content = article_content.replaceAll("<script", "&lt;script");
-		article_content = article_content.replaceAll("</script", "&lt;/script");
-		article_content = article_content.replaceAll("<iframe", "&lt;iframe");
-		article_content = article_content.replaceAll("<embed", "&lt;embed");  // embed 태그를 사용하지 않을 경우만
-		article_content = article_content.replaceAll("<object", "&lt;object");    // object 태그를 사용하지 않을 경우만
-		article_content = article_content.replaceAll("<frame", "&lt;frame");
-
-		vo.setAt_id(article_id);
-		vo.setAt_title(article_title);
-		vo.setAt_writer(article_write);
-		vo.setAt_hit(article_hit);
-		vo.setAt_type(article_type);
-		vo.setAt_content(article_content);
-		vo.setAt_ref(article_ref);
-		vo.setAt_re_lev(article_re_lev);
-		vo.setAt_re_step(article_re_step);
-
-		vo.setIs_lock(is_lock);
-		vo.setAt_pw(article_password);
-		// enctype="multipart/form-data" 넘기는 파라미터는 기존의 request로 받을 수 없다.
-		if (request.getParameter("m").equals("w")) {
-			article_id = b_dao.insert(vo);
-		} else if (request.getParameter("m").equals("r")) {
-			article_id = b_dao.reply_article(vo);
-		} else if (request.getParameter("m").equals("m")) {
-			article_id = b_dao.modify(vo);
-		}
-		// //////////////////////////////////////////////////////
-		String url = "sRead?b=" + article_type + "&p=1&n=" + article_id;
-		response.sendRedirect(url);
-		vo.setAt_id(article_id);
-
-		model.addAttribute("b", article_type);
-		model.addAttribute("vo", vo);
-		return "bbs/study-read";
+		if(result.equals("signup/login")) 
+			return "bbs/study-read";
+		else return result;
 	}
 	
 	@RequestMapping(value = "/pWriteProcess", method = RequestMethod.POST)
-	public String pWriteProcess(Locale locale, Model model, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
-
-		System.out.println("asdf");
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+	public String pWriteProcess(Locale locale, Model model, HttpSession session, @RequestParam("file") MultipartFile[] files,
+			HttpServletResponse response, HttpServletRequest request) throws IOException, SQLException  {
 		
-		if(session.getAttribute("nickname")==null || 
-				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "signup/login";
+		String result = writeProcess(locale, model, session, files, response, request);
+		result = "p" + result;
+		response.sendRedirect(result);
 		
-		BoardVO vo = new BoardVO();
-		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
-		Board b_dao = context.getBean("BoardDao", Board.class);
-
-		String article_title = request.getParameter("title");
-		String article_write = request.getParameter("at_writer");
-
-		String article_password = request.getParameter("at_pass");
-		String checked = request.getParameter("is_lock");
-		
-		String is_lock = "Y";
-		if ( checked ==null || article_password == null || article_password.equals("")) {
-			is_lock = "N";
-			article_password = "";
-		} else {
-			if( !article_password.equals(curr_Lock_str_md5) ) {
-				//현재 비밀번호가 바뀐 상태임.
-				MessageDigest md = null;
-				try {
-					md = MessageDigest.getInstance("md5");
-				} catch (NoSuchAlgorithmException e1) {
-					e1.printStackTrace();
-				}
-
-				byte[] bytData = article_password.getBytes();
-				md.update(bytData);
-				byte[] digest = md.digest();
-				String strENCData = "";
-				for (int i = 0; i < digest.length; i++)
-					strENCData = strENCData
-							+ Integer.toHexString(digest[i] & 0xFF).toUpperCase();
-				
-				strENCData = strENCData.substring(0, 15);
-				article_password = strENCData;
-			}
-		}
-		
-		int article_hit = 0;
-		int article_re_lev = 0;
-		int article_ref = 0;
-		int article_re_step = 0;
-		int article_id = 0;
-		if (request.getParameter("at_id") != null
-				&& request.getParameter("at_id").trim().length() != 0) {
-			article_id = Integer.parseInt(request.getParameter("at_id"));
-		}
-		if (request.getParameter("at_re_lev") != null
-				&& request.getParameter("at_re_lev").trim().length() != 0) {
-			article_re_lev = Integer.parseInt(request
-					.getParameter("at_re_lev"));
-		}
-		if (request.getParameter("at_ref") != null
-				&& request.getParameter("at_ref").trim().length() != 0) {
-			article_ref = Integer.parseInt(request.getParameter("at_ref"));
-		}
-		if (request.getParameter("at_re_step") != null
-				&& request.getParameter("at_re_step").trim().length() != 0) {
-			article_re_step = Integer.parseInt(request
-					.getParameter("at_re_step"));
-		}
-		String article_type = request.getParameter("at_type");
-		String article_content = request.getParameter("contents");
-	
-		article_content = article_content.replaceAll("<script", "&lt;script");
-		article_content = article_content.replaceAll("</script", "&lt;/script");
-		article_content = article_content.replaceAll("<iframe", "&lt;iframe");
-		article_content = article_content.replaceAll("<embed", "&lt;embed");  // embed 태그를 사용하지 않을 경우만
-		article_content = article_content.replaceAll("<object", "&lt;object");    // object 태그를 사용하지 않을 경우만
-		article_content = article_content.replaceAll("<frame", "&lt;frame");
-
-		vo.setAt_id(article_id);
-		vo.setAt_title(article_title);
-		vo.setAt_writer(article_write);
-		vo.setAt_hit(article_hit);
-		vo.setAt_type(article_type);
-		vo.setAt_content(article_content);
-		vo.setAt_ref(article_ref);
-		vo.setAt_re_lev(article_re_lev);
-		vo.setAt_re_step(article_re_step);
-		vo.setIs_lock(is_lock);
-		vo.setAt_pw(article_password);
-		// enctype="multipart/form-data" 넘기는 파라미터는 기존의 request로 받을 수 없다.
-		if (request.getParameter("m").equals("w")) {
-			article_id = b_dao.insert(vo);
-		} else if (request.getParameter("m").equals("r")) {
-			article_id = b_dao.reply_article(vo);
-		} else if (request.getParameter("m").equals("m")) {
-			article_id = b_dao.modify(vo);
-		}
-		// //////////////////////////////////////////////////////
-		String url = "pRead?b=" + article_type + "&p=1&n=" + article_id;
-		response.sendRedirect(url);
-		vo.setAt_id(article_id);
-
-		model.addAttribute("b", article_type);
-		model.addAttribute("vo", vo);
-		return "bbs/project-read";
+		if(result.equals("signup/login")) 
+			return "bbs/project-read";
+		else return result;
 	}
 	
 	@RequestMapping(value = "/bModify", method = RequestMethod.GET)
@@ -1218,6 +1057,9 @@ public class HomeController {
 					&& session.getAttribute("nickname") !=null ) {
 			int level = (Integer) session.getAttribute("level");
 			if (level > 5) {
+				AttachFile db_file = new DaoFactory().AttachFileDao();
+				Vector<FileVO> f_vo = db_file.select_file(Integer.parseInt(n));
+				model.addAttribute("f_vo", f_vo);
 				return "bbs/board-modify";
 			} else
 				return "signup/login";
@@ -1520,5 +1362,18 @@ public class HomeController {
 		c_dao.comment_delete(cmt_id, article_id);
 		return "empty";
 
+	}
+	
+	@RequestMapping(value = "/fileDown", method = RequestMethod.GET)
+	public ModelAndView fileDown(@RequestParam("filePath") String filePath,
+			@RequestParam("fileName") String fileName)
+			throws UnsupportedEncodingException {
+		filePath = new String(filePath.getBytes("8859_1"), "UTF-8");
+		fileName = new String(fileName.getBytes("8859_1"), "UTF-8");
+
+		String fullPath = filePath + "/" + fileName;
+		System.out.println(fullPath);
+		File downloadFile = new File(fullPath);
+		return new ModelAndView("download", "downloadFile", downloadFile);
 	}
 }
