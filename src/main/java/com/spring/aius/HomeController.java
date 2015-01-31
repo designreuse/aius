@@ -1034,7 +1034,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1060,6 +1060,9 @@ public class HomeController {
 				AttachFile db_file = new DaoFactory().AttachFileDao();
 				Vector<FileVO> f_vo = db_file.select_file(Integer.parseInt(n));
 				model.addAttribute("f_vo", f_vo);
+				
+				model.addAttribute("files", f_vo);
+				model.addAttribute("files_size", f_vo.size());
 				return "bbs/board-modify";
 			} else
 				return "signup/login";
@@ -1083,7 +1086,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1107,7 +1110,15 @@ public class HomeController {
 					&& session.getAttribute("nickname") !=null ) {
 			int level = (Integer) session.getAttribute("level");
 			if (level > 5) {
+				AttachFile db_file = new DaoFactory().AttachFileDao();
+				Vector<FileVO> f_vo = db_file.select_file(Integer.parseInt(n));
+				model.addAttribute("f_vo", f_vo);
+				
+				model.addAttribute("files", f_vo);
+				model.addAttribute("files_size", f_vo.size());
+				
 				return "bbs/study-modify";
+			
 			} else
 				return "signup/login";
 		} else {
@@ -1128,7 +1139,7 @@ public class HomeController {
 		model.addAttribute("board", board);
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1150,6 +1161,12 @@ public class HomeController {
 					&& session.getAttribute("nickname") !=null ) {
 			int level = (Integer) session.getAttribute("level");
 			if (level > 5) {
+				AttachFile db_file = new DaoFactory().AttachFileDao();
+				Vector<FileVO> f_vo = db_file.select_file(Integer.parseInt(n));
+				model.addAttribute("f_vo", f_vo);
+				
+				model.addAttribute("files", f_vo);
+				model.addAttribute("files_size", f_vo.size());
 				return "bbs/project-modify";
 			} else
 				return "signup/login";
@@ -1172,7 +1189,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1205,7 +1222,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1237,7 +1254,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		
 		BoardVO tmp = b_dao.get_column(n);
@@ -1311,7 +1328,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		CommentVO vo = new CommentVO();
 		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -1354,7 +1371,7 @@ public class HomeController {
 
 		if(session.getAttribute("nickname")==null || 
 				session.getAttribute("id")== null || 
-					session.getAttribute("level")==null) return "login";
+					session.getAttribute("level")==null) return "sign/login";
 		
 		String cmt_id = comment_id;
 		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
@@ -1376,4 +1393,22 @@ public class HomeController {
 		File downloadFile = new File(fullPath);
 		return new ModelAndView("download", "downloadFile", downloadFile);
 	}
+	
+	@RequestMapping(value = "/fileDelete", method = RequestMethod.GET)
+	public String fileDelete(@RequestParam("article_id") String article_id,
+			@RequestParam("file_id") String file_id) {
+		
+		/*
+		 * 여기서 글 작성자와 세션 닉네임이 같나 한번더 확인해야 함.
+		 * 
+		 * 
+		 * */
+		int at_id = Integer.parseInt(article_id);
+		int f_id = Integer.parseInt(file_id);
+
+		AttachFile db_file = new DaoFactory().AttachFileDao();
+		db_file.delete_file(at_id, f_id);
+		return "empty";
+	}
+	
 }

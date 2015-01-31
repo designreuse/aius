@@ -10,7 +10,29 @@ var test = function() {
 	alert("asdf");
 }
 $(function() {
-	
+	$('#file_delete').click(function() {
+		if(confirm("파일 삭제시 복구할 수 없습니다.\n파일을 삭제하시겠습니까?")==false) return false;
+		var article_id = $(this).data("a");
+		var file_id = $(this).data("b");
+		$(this).parent().parent().html("<input type=\"file\" name=\"file\" style=\"width: 100%;\">");
+		$.ajax({
+			type : "get",
+			url : "fileDelete",
+			dataType : "text",
+			data : {
+				article_id : article_id,
+				file_id : file_id
+			},
+			success : function(data) {
+			},
+			error : function(e, xhr) {
+				alert(e.status + ">" + xhr)
+			},
+			cache : false,
+			async : false,
+			contentType : "application/x-www-form-urlencoded;charset=utf-8"
+		})
+	});
 	
 	
 	$('#login_id_input').focus();
