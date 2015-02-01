@@ -88,6 +88,7 @@ public class Board {
 	}
 
 	public int modify(BoardVO vo) throws SQLException {
+		System.out.println(vo.getAt_content());
 		Connection conn = connectionMaker.makeConnection();
 		PreparedStatement pstmt = null;
 		int change_article_num = 0;
@@ -151,7 +152,7 @@ public class Board {
 				change_column_num = pstmt.executeUpdate(strQuery);
 
 			} catch (SQLException e2) {
-				System.out.println("MAX°ª ¸øºÒ·¯¿È.");
+				System.out.println("MAXï¿½ï¿½ ï¿½ï¿½Ò·ï¿½ï¿½ï¿½.");
 			}
 			String Query = "INSERT INTO meta_board "
 					+ "(ARTICLE_ID,  ARTICLE_TITLE, ARTICLE_WRITER, ARTICLE_DATE, "
@@ -189,7 +190,7 @@ public class Board {
 	}
 
 	/*
-	 * 2015.01.28 ¼öÁ¤ÇÏ¿© »ç¿ëÇÔ. °è´Ü½Ä ÀÏ´Ü »èÁ¦.
+	 * 2015.01.28 ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½Ü½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	 */
 	public Vector<BoardVO> select_board(String str, int page_num)
 			throws SQLException {
@@ -492,7 +493,7 @@ public class Board {
 			rs.next();
 			result = rs.getInt(1);
 			rs.close();
-			if (result == 0) { // ÃßÃµÀÌ ¾ÈµÈ°æ¿ì´Ï±î.
+			if (result == 0) { // ï¿½ï¿½Ãµï¿½ï¿½ ï¿½ÈµÈ°ï¿½ï¿½Ï±ï¿½.
 				pstmt = conn.prepareStatement(Query);
 				change_column_num = pstmt.executeUpdate(Query);
 

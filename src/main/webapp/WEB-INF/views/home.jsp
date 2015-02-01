@@ -18,6 +18,17 @@
 <link href="./resources/css/style.css" rel="stylesheet">
 
 <link href="./resources/css/aius.css" rel="stylesheet">
+
+<!-- Mainly scripts -->
+<script src="./resources/js/jquery-2.1.1.js"></script>
+<script src="./resources/js/bootstrap.min.js"></script>
+<script src="./resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="./resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="./resources/js/inspinia.js"></script>
+<script src="./resources/js/aius.js"></script>
+<script src="./resources/js/plugins/pace/pace.min.js"></script>
 </head>
 
 <body>
@@ -33,8 +44,10 @@
 							<a href="/index"><font size="40px" color="#8C97A8"
 								style="margin: 0;">WHO</font></a>
 						</div>
-						<div class="logo-element"><a href="/index"><font color="#8C97A8"
-								style="margin: 0; font-size: 15px;">WHO</font></a></div>
+						<div class="logo-element">
+							<a href="/index"><font color="#8C97A8"
+								style="margin: 0; font-size: 15px;">WHO</font></a>
+						</div>
 					</li>
 					<li class="active"><a href="/"><i class="fa fa-th-large"></i>
 							<span class="nav-label">메인으로</span></a></li>
@@ -87,6 +100,43 @@
 			<div class="wrapper wrapper-content animated">
 				<div class="row">
 					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+
+							<div class="ibox-title"
+								style="width: 100%; display: inline-table; padding-bottom: 13px;">
+								<div class="carousel" id="carousel2">
+									<ol class="carousel-indicators">
+										<li data-slide-to="0" data-target="#carousel2" class="active"></li>
+										<li data-slide-to="1" data-target="#carousel2" class=""></li>
+									</ol>
+									<div class="carousel-inner">
+										<div class="item active">
+											<img alt="resources/img/" class="img-responsive"
+												src="resources/img/who1.png">
+											<div class="carousel-caption">
+												<p>WHO 지도교수님과 함께.</p>
+											</div>
+										</div>
+										<div class="item">
+											<img alt="image" class="img-responsive"
+												src="resources/img/who2.png">
+											<div class="carousel-caption">
+												<p>WHO 동아리 스터디 겸 회식.</p>
+											</div>
+										</div>
+									</div>
+									<a data-slide="prev" href="#carousel2"
+										class="left carousel-control"> <span class="icon-prev"></span>
+									</a> <a data-slide="next" href="#carousel2"
+										class="right carousel-control"> <span class="icon-next"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
 						<div class="ibox float-e-margins" style="margin-bottom: 10px;">
 							<div class="ibox-title">
 								공지 사항 - ${notice.at_title} <a href="javascript:void(0);"
@@ -96,7 +146,7 @@
 
 							</div>
 							<div class="ibox-content" id="image-showing-aius"
-								style="padding-top: 10px; padding-bottom: 3px;min-height: 42px;">
+								style="padding-top: 10px; padding-bottom: 3px; min-height: 42px; border-bottom:1px solid #e7eaec">
 
 								<p>${notice.at_content}</p>
 							</div>
@@ -185,22 +235,11 @@
 						</div>
 					</div>
  -->
-			
+
 			</div>
 		</div>
 	</div>
 
-	<!-- Mainly scripts -->
-	<script src="./resources/js/jquery-2.1.1.js"></script>
-	<script src="./resources/js/bootstrap.min.js"></script>
-	<script src="./resources/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script
-		src="./resources/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="./resources/js/inspinia.js"></script>
-	<script src="./resources/js/aius.js"></script>
-	<script src="./resources/js/plugins/pace/pace.min.js"></script>
 </body>
 
 </html>

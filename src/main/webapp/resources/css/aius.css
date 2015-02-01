@@ -5,6 +5,17 @@ body {
 /*
 	버튼의 오른쪽 정렬.
 */
+.crop {
+	max-height: 500px;
+	overflow: hidden;
+	position: relative;
+	top: -25px;
+	left: -10px;
+}
+.crop img {
+	min-width: 1600px;
+	max-height: 500px;
+}
 .btn-right {
 	float: right;
 }
