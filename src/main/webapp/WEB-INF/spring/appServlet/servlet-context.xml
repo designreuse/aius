@@ -16,11 +16,14 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/resources/**" location="/resources/" />
 	<resources mapping="/resources/js/plugins/**" location="/resources/js/plugins/" />
+	<resources mapping="/resources/css/plugins/**" location="/resources/css/plugins/" />
 	<resources mapping="/resources/js/plugins/flot/**" location="/resources/js/plugins/flot/" />
 	<resources mapping="/resources/js/plugins/morris/**" location="/resources/js/plugins/morris/" />
 	<resources mapping="/resources/js/plugins/pace/**" location="/resources/js/plugins/pace/" />
 	<resources mapping="/resources/js/plugins/slimscroll/**" location="/resources/js/plugins/slimscroll/" />
 	<resources mapping="/resources/js/plugins/metisMenu/**" location="/resources/js/plugins/metisMenu/" />
+	<resources mapping="/resources/js/plugins/summernote/**" location="/resources/js/plugins/summernote/" />
+	<resources mapping="/resources/css/plugins/summernote/**" location="/resources/css/plugins/summernote/" />
 	<resources mapping="/resources/image/**" location="/resources/image/" />
 	<resources mapping="/resources/img/**" location="/resources/img/" />
 	<resources mapping="/resources/btn-image/**" location="/resources/btn-image/" />
@@ -50,7 +53,7 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
 		 <!-- setting maximum upload size -->
-		<beans:property name="maxUploadSize" value="10000000" />
+		<beans:property name="maxUploadSize" value="100000000" />
 
 	</beans:bean>
 	

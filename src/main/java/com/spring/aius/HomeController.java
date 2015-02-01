@@ -306,6 +306,12 @@ public class HomeController {
 		return "bbs/study-read";
 	}
 
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test(Locale locale, Model model,
+			HttpSession session, HttpServletRequest request) {
+		
+		return "test";
+	}
 	@RequestMapping(value = "/pRead", method = RequestMethod.GET)
 	public String pRead(@RequestParam String b, @RequestParam String p,
 			@RequestParam String n, Locale locale, Model model,
@@ -700,6 +706,8 @@ public class HomeController {
 	
 	String writeProcess(Locale locale, Model model, HttpSession session, @RequestParam("file") MultipartFile[] files,
 			HttpServletResponse response, HttpServletRequest request) throws SQLException, IOException {
+		
+		System.out.println("asdfsdf");
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		

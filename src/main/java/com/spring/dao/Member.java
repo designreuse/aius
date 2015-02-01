@@ -29,13 +29,9 @@ public class Member {
 		String mem_id = vo.getUser_id();
 		String mem_pw = vo.getUser_pw();
 
-	    //원본 데이터를 바이트배열로 바꾸어서,
 	    byte[] bytData = mem_pw.getBytes();
-	    //이 데이터를 MessageDigest에 업데이트 하고,
 	    md.update(bytData);
-	    //암호화 합니다. (암호화된 데이터는 바이트 배열로 나옵니다.)
 	    byte[] digest = md.digest();
-	    //암호화 된 데이터를 대문자 String으로 바꾸어 봅니다.
 	    String strENCData = "";
 	    for(int i =0;i<digest.length;i++) {
 	        strENCData = strENCData + Integer.toHexString(digest[i] & 0xFF).toUpperCase();
@@ -52,7 +48,6 @@ public class Member {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ee) {
-			System.err.println("드라이버 없당~!");
 		}
 		try {
 			String Query = "INSERT INTO meta_user "
@@ -71,7 +66,6 @@ public class Member {
 			pstmt.executeUpdate();
 		} catch (SQLException ee1) {
 			ee1.printStackTrace();
-			System.out.println("연결 실패");
 			result = false;
 		} finally {
 			try {
@@ -101,13 +95,9 @@ public class Member {
 
 		String strENCData = "";
 		if(mem_pw.length()!=0) {
-			//원본 데이터를 바이트배열로 바꾸어서,
 			byte[] bytData = mem_pw.getBytes();
-			//이 데이터를 MessageDigest에 업데이트 하고,
 			md.update(bytData);
-			//암호화 합니다. (암호화된 데이터는 바이트 배열로 나옵니다.)
 			byte[] digest = md.digest();
-			//암호화 된 데이터를 대문자 String으로 바꾸어 봅니다.
 			for(int i =0;i<digest.length;i++) {
 				strENCData = strENCData + Integer.toHexString(digest[i] & 0xFF).toUpperCase();
 			}
@@ -119,7 +109,6 @@ public class Member {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException ee) {
-			System.err.println("드라이버 없당~!");
 		}
 		try {
 			String Query = "update meta_user set mem_email = '" + mem_email + "' , "
@@ -134,7 +123,6 @@ public class Member {
 			change_article_num = pstmt.executeUpdate();
 		} catch (SQLException ee1) {
 			ee1.printStackTrace();
-			System.out.println("연결 실패");
 			result = false;
 		} finally {
 			try {
@@ -176,7 +164,6 @@ public class Member {
 			rs.close();
 		} catch (SQLException ee1) {
 			ee1.printStackTrace();
-			System.out.println("연결 실패ccccc ");
 		} finally {
 			try {
 				if (conn != null)
@@ -220,7 +207,6 @@ public class Member {
 			rs.close();
 		} catch (SQLException ee1) {
 			ee1.printStackTrace();
-			System.out.println("연결 실패ccccc ");
 		} finally {
 			try {
 				if (conn != null)
@@ -250,7 +236,6 @@ public class Member {
 			rs.close();
 		} catch (SQLException ee1) {
 
-			System.out.println("연결 실패ccccc ");
 		} finally {
 			try {
 				if (conn != null)
@@ -280,7 +265,6 @@ public class Member {
 			rs.close();
 		} catch (SQLException ee1) {
 
-			System.out.println("연결 실패ccccc ");
 		} finally {
 			try {
 				if (conn != null)
@@ -312,7 +296,6 @@ public class Member {
 			pstmt.executeUpdate();
 		} catch (SQLException ee1) {
 
-			System.out.println("연결 실패ccccc ");
 		} finally {
 			try {
 				if (conn != null)
