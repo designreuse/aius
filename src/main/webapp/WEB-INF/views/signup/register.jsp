@@ -44,7 +44,7 @@
 							<li><a href="/information">WHO 소개</a></li>
 							<li><a href="/contacts">구성원 소개</a></li>
 							<li><a href="/register">회원 가입</a></li>
-							<li><a href="#">가입 신청</a></li>
+							<li><a href="#">동아리 가입 신청</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">게시판</span> <span class="fa arrow"></span></a>
@@ -56,9 +56,9 @@
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">스터디</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="study?b=html5&p=1">HTML5</a></li>
-							<li><a href="study?b=spring&p=1">Spring</a></li>
-							<li><a href="study?b=vision&p=1">Computer Vision</a></li>
+							<li><a href="study?b=web&p=1">웹 프로그래밍</a></li>
+							<li><a href="study?b=algorithm&p=1">알고리즘</a></li>
+							<li><a href="study?b=vision&p=1">컴퓨터 비전</a></li>
 							<li><a href="study?b=pattern&p=1">패턴 인식</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
@@ -66,7 +66,6 @@
 						<ul class="nav nav-second-level">
 							<li><a href="project?b=tradio&p=1">트레지오</a></li>
 							<li><a href="project?b=scsc&p=1">SCSC</a></li>
-							<li><a href="project?b=samsung&p=1">Image Transforms</a></li>
 						</ul></li>
 				</ul>
 
@@ -74,40 +73,40 @@
 		</nav>
 
 		<div id="page-wrapper" class="gray-bg">
-			<div class="middle-box text-center loginscreen" style="margin-top: -480px;">
+			<div class="middle-box text-center loginscreen" style="margin-top: -500px;">
 				<p>Create account to see it in action.</p>
 				<form class="m-t" role="form" action="/registerProcess" id="user-register" method="post">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디를 입력해주세요." id="user-id" name="user-id"
+						<input type="text" class="form-control align-center-aius" placeholder="아이디를 입력해주세요." id="user-id" name="user-id"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="이름을 입력해주세요." id="user-name" name="user-name"
+						<input type="text" class="form-control align-center-aius" placeholder="이름을 입력해주세요." id="user-name" name="user-name"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="닉네임을 입력해주세요." id="user-nickname" name="user-nickname"
+						<input type="text" class="form-control align-center-aius" placeholder="닉네임을 입력해주세요." id="user-nickname" name="user-nickname"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="이메일을 입력해주세요." id="user-email" name="user-email"
+						<input type="email" class="form-control align-center-aius" placeholder="이메일을 입력해주세요." id="user-email" name="user-email"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요." id="user-pw" name="user-pw"
+						<input type="password" class="form-control align-center-aius" placeholder="비밀번호를 입력해주세요." id="user-pw" name="user-pw"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호를 다시 입력해주세요." id="user-pw-check" name="user-pw-check"
+						<input type="password" class="form-control align-center-aius" placeholder="비밀번호를 다시 입력해주세요." id="user-pw-check" name="user-pw-check"
 							required="required">
 					</div>
 					<div class="form-group">
-						<input type="text" id="user-intro" class="form-control" placeholder="간결한 소개 부탁드립니다." name="user-intro" style="min-height: 200px;">
+						<input type="text" id="user-intro" class="form-control align-center-aius" placeholder="간결한 소개 부탁드립니다." name="user-intro" style="min-height: 200px;">
 					</div>
 					
-					<button type="submit" class="btn btn-primary block full-width m-b">Register</button>
+					<button type="submit" class="btn btn-primary block full-width m-b">가입하기</button>
 
-					<a class="btn btn-sm btn-white btn-block" href="/login">Login</a>
+					<a class="btn btn-sm btn-white btn-block" href="/login">로그인</a>
 				</form>
 			</div>
 

@@ -96,7 +96,7 @@ public class Board {
 		int article_id = vo.getAt_id();
 
 		String Query = "";
-		if (vo.getAt_pw().equals("2e11edb12c37d93")) {
+		if (vo.getAt_pw().equals("2E11EDB12C37D93")) {
 			Query = "update meta_board set article_title = '" + article_title
 					+ "' , " + "article_content = '" + article_content
 					+ "' where article_id = " + article_id;

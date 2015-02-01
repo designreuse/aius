@@ -1,5 +1,7 @@
 @CHARSET "UTF-8";
-
+body {
+	min-width: 330px;
+}
 /*
 	버튼의 오른쪽 정렬.
 */
@@ -58,10 +60,28 @@
 	height: 400px;
 	margin-bottom: 20px;
 }
-
+#image-showing-aius {
+	display: inline-block;
+	float: none;
+	width: 100%;
+}
+#image-showing-aius img {
+	max-width: 600px;
+}
 .ibox-image-aius {
 	width: 24%;
 	margin-bottom: 5px;
+}
+
+.align-center-aius {
+	text-align: center;
+}
+
+@media ( max-width : 909px) {
+	
+	#image-showing-aius img {
+		max-width: 100%;
+	}
 }
 
 @media ( max-width : 845px) {
@@ -75,5 +95,8 @@
 	.ibox-image-aius {
 		width: 100%;
 		margin-bottom: 5px;
+	}
+	#image-showing-aius img {
+		max-width: 100%;
 	}
 }

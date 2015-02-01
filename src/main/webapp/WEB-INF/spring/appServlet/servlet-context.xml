@@ -25,14 +25,16 @@
 	<resources mapping="/resources/img/**" location="/resources/img/" />
 	<resources mapping="/resources/btn-image/**" location="/resources/btn-image/" />
 	<resources mapping="/resources/fonts/**" location="/resources/fonts/" />
+	
+	<resources mapping="/resources/stonefiles/**" location="/resources/stonefiles/" />
 	<resources mapping="/resources/font-awesome/**" location="/resources/font-awesome/" />
 	<resources mapping="/resources/fonts/font-awesome/css/**" location="/resources/fonts/font-awesome/css/" />
 	<resources mapping="/resources/fonts/font-awesome/fonts/**" location="/resources/fonts/font-awesome/fonts/" />
 	<resources mapping="/resources/fonts/font-awesome/less/**" location="/resources/fonts/font-awesome/less/" />
 	<resources mapping="/resources/fonts/font-awesome/scss/**" location="/resources/fonts/font-awesome/scss/" />
-	<resources mapping="/ck/**" location="/ck/" />
-	<resources mapping="/resources/ck/ckfinder/**" location="/resources//ck/ckfinder/" />
-	<resources mapping="/resources/ck/ckeditor/**" location="/resources//ck/ckeditor/" />
+	<resources mapping="/resources/ck/ckfinder/**" location="/resources/ck/ckfinder/" />
+	<resources mapping="/resources/ck/**" location="/resources/ck/" />
+	<resources mapping="/resources/ck/ckeditor/**" location="/resources/ck/ckeditor/" />
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

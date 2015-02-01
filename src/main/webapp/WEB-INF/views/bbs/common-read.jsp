@@ -22,7 +22,7 @@
 					</c:forEach>
 				</div>
 			</c:if>
-			<div class="ibox-content"
+			<div class="ibox-content" id="image-showing-aius"
 				style="padding-top: 10px; padding-bottom: 3px;">
 				${vo.at_content}</div>
 

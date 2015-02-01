@@ -63,7 +63,7 @@
 
 				{
 					name : 'insert',
-					items : [ 'Image', 'Flash', 'Smiley', 'SpecialChar' ]
+					items : [ 'Image', 'Flash', 'Smiley', 'Link', 'SpecialChar' ]
 				},
 
 				{
@@ -75,7 +75,12 @@
 				}
 
 		],
-
+		filebrowserBrowseUrl : '/resources/ck/ckfinder/ckfinder.html',
+		filebrowserImageBrowseUrl : '/resources/ck/ckfinder/ckfinder.html',
+		filebrowserFlashBrowseUrl : '/resources/ck/ckfinder/ckfinder.html',
+		filebrowserUploadUrl : '/resources/ck/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Files',
+		filebrowserImageUploadUrl : '/resources/ck/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images',
+		filebrowserFlashUploadUrl :'/resources/ck/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash',
 		FilesystemEncoding : 'CP949',
 		enterMode : 'CKEDITOR.ENTER_BR',
 		height : '350px'

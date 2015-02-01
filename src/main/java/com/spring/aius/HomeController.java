@@ -161,7 +161,6 @@ public class HomeController {
 		model.addAttribute("board_type", board_type);
 		model.addAttribute("vo", vo);
 
-		System.out.println(flag);
 		if (session.getAttribute("id") != null
 				&& session.getAttribute("nickname") != null
 				&& session.getAttribute("level") != null
@@ -513,11 +512,12 @@ public class HomeController {
 		model.addAttribute("pt", pt);
 
 		for (int i = 0; i < article.size(); i++) {
-			int size = article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").length() - 1 < 80 ? 
-					article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").length()
-					: 80;
+			String tmp = article.elementAt(i).getAt_content().replaceAll("<[^>]*>","");
+			int size = tmp.length() - 1 < 120 ? 
+					tmp.length()
+					: 120;
 			article.elementAt(i).setAt_content(
-					article.elementAt(i).getAt_content().replace("<", "&lt;").replace(">", "&gt;").substring(0, size));
+					tmp.substring(0, size));
 		}
 		/*
 		 * board -> board 게시판 종류에 따라, page -> 페이지 번호에 따라 게시물을 불러옴. article 벡터에
@@ -713,7 +713,6 @@ public class HomeController {
 
 		String article_title = request.getParameter("title");
 		String article_write = request.getParameter("at_writer");
-		System.out.println(article_write);
 		String article_password = request.getParameter("at_pass");
 		String checked = request.getParameter("is_lock");
 		
@@ -804,7 +803,6 @@ public class HomeController {
 		} else if (request.getParameter("m").equals("m")) {
 			article_id = b_dao.modify(vo);
 		}
-		System.out.println("asdf");
 		
 		
 		for (int i = 0; i < files.length; i++) {

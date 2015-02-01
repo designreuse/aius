@@ -10,6 +10,9 @@ var test = function() {
 	alert("asdf");
 }
 $(function() {
+	$('#back_btn').click(function() {
+		location.href = document.referrer;
+	})
 	$('body').on('click', '#file_delete', function() {
 		if (confirm("파일 삭제시 글의 수정을 \n하지 않을 경우에도 복구할 수 없습니다.\n정말로 파일을 삭제하시겠습니까?") == false)
 			return false;
@@ -521,8 +524,8 @@ $(function() {
 		 * 간략한 유효성 검사 마무리.
 		 * 여기서부터는 중복검사 들어가야 함.
 		 */
+		location.href = document.referrer;
 	});
-
 });
 function b_hit_up(_id, _board, _p) {
 	$.ajax({

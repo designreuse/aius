@@ -45,7 +45,7 @@
 							<li><a href="/information">WHO 소개</a></li>
 							<li><a href="/contacts">구성원 소개</a></li>
 							<li><a href="/register">회원 가입</a></li>
-							<li><a href="#">가입 신청</a></li>
+							<li><a href="#">동아리 가입 신청</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">게시판</span> <span class="fa arrow"></span></a>
@@ -57,9 +57,9 @@
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
 							class="nav-label">스터디</span> <span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
-							<li><a href="study?b=html5&p=1">HTML5</a></li>
-							<li><a href="study?b=spring&p=1">Spring</a></li>
-							<li><a href="study?b=vision&p=1">Computer Vision</a></li>
+							<li><a href="study?b=web&p=1">웹 프로그래밍</a></li>
+							<li><a href="study?b=algorithm&p=1">알고리즘</a></li>
+							<li><a href="study?b=vision&p=1">컴퓨터 비전</a></li>
 							<li><a href="study?b=pattern&p=1">패턴 인식</a></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-th-large"></i> <span
@@ -67,7 +67,6 @@
 						<ul class="nav nav-second-level">
 							<li><a href="project?b=tradio&p=1">트레지오</a></li>
 							<li><a href="project?b=scsc&p=1">SCSC</a></li>
-							<li><a href="project?b=samsung&p=1">Image Transforms</a></li>
 						</ul></li>
 				</ul>
 
@@ -78,9 +77,6 @@
 			<%@include file=".././index/common-login.jsp"%>
 
 
-			<div class="lock-word animated fadeInDown">
-				<span class="first-word">LOCKED</span><span>SCREEN</span>
-			</div>
 			<div class="middle-box text-center lockscreen animated" style="margin-top: -400px;">
 				<div>
 					<form class="m-t" role="form" onsubmit="return false;">
@@ -93,6 +89,7 @@
 						<input type="hidden" name="b" data-a="${b}">
 						<input type="hidden" name="p" data-a="${p}">
 					</form>
+					<button type="button" id="back_btn" class="btn btn-primary block full-width m-b">돌아가기</button>
 				</div>
 			</div>
 		</div>
